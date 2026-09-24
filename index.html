@@ -164,8 +164,20 @@
         "https://testingcf.jsdelivr.net/gh/" + REPO + "@main/"
       ];
 
+      function fullyDecode(value) {
+        var prev = String(value || "");
+        for (var i = 0; i < 5; i++) {
+          try {
+            var next = decodeURIComponent(prev);
+            if (next === prev) break;
+            prev = next;
+          } catch (e) { break; }
+        }
+        return prev;
+      }
+
       function encodeAssetPath(path) {
-        return String(path || "").split("/").map(encodeURIComponent).join("/");
+        return fullyDecode(path).split("/").filter(Boolean).map(encodeURIComponent).join("/");
       }
 
       function siteBase() {
@@ -174,27 +186,25 @@
         return location.origin + path;
       }
 
-      function decodeMaybe(value) {
-        try { return decodeURIComponent(value); } catch (e) { return value; }
+      function stripQueryHash(value) {
+        return String(value || "").split("#")[0].split("?")[0];
       }
 
       function toRepoRel(src) {
         if (!src) return "";
         var abs = src;
         try { abs = new URL(src, location.href).href; } catch (e) {}
+        abs = stripQueryHash(abs);
         for (var i = 0; i < CDNS.length; i++) {
-          if (abs.indexOf(CDNS[i]) === 0) {
-            return decodeMaybe(abs.slice(CDNS[i].length).split("#")[0].split("?")[0]);
-          }
+          if (abs.indexOf(CDNS[i]) === 0) return fullyDecode(abs.slice(CDNS[i].length));
         }
         var base = siteBase();
-        if (abs.indexOf(base) === 0) return decodeMaybe(abs.slice(base.length).split("#")[0].split("?")[0]);
+        if (abs.indexOf(base) === 0) return fullyDecode(abs.slice(base.length));
         var originRoot = location.origin + "/";
         if (abs.indexOf(originRoot) === 0) {
-          var rest = abs.slice(originRoot.length).replace(/^agent-study\//, "");
-          return decodeMaybe(rest.split("#")[0].split("?")[0]);
+          return fullyDecode(abs.slice(originRoot.length).replace(/^agent-study\//, ""));
         }
-        if (!/^https?:/i.test(src)) return decodeMaybe(src.replace(/^\.\//, "").replace(/^\//, ""));
+        if (!/^https?:/i.test(src)) return fullyDecode(src.replace(/^\.\//, "").replace(/^\//, ""));
         return "";
       }
 
@@ -203,45 +213,44 @@
         var dir = String(file || "").replace(/[^/]+$/, "");
         return content.replace(/(!\[[^\]]*\]\()([^)\s]+)(\))/g, function (m, pre, src, post) {
           if (/^https?:/i.test(src) || src.indexOf("data:") === 0) return m;
-          var rel = src.replace(/^\.\//, "");
+          var rel = fullyDecode(src.replace(/^\.\//, ""));
           if (rel.charAt(0) === "/") rel = rel.slice(1);
           else if (rel.indexOf("大模型面试题/") !== 0) rel = dir + rel;
           return pre + CDNS[0] + encodeAssetPath(rel) + post;
         });
       }
 
+      function assetUrl(rel, idx) {
+        if (idx < CDNS.length) return CDNS[idx] + encodeAssetPath(rel);
+        return siteBase() + encodeAssetPath(rel);
+      }
+
       window.__ASSET_CDNS = CDNS;
       window.__ASSET_ON_PAGES = ON_PAGES;
 
       window.__onDocsifyImgError = function (img) {
-        var rel = img.getAttribute("data-rel") || "";
+        var rel = fullyDecode(img.getAttribute("data-rel") || "");
         if (!rel) return;
         var tried = Number(img.getAttribute("data-cdn-try") || "0") + 1;
         img.setAttribute("data-cdn-try", String(tried));
-        if (tried < CDNS.length) {
-          img.src = CDNS[tried] + encodeAssetPath(rel);
-          return;
+        if (tried <= CDNS.length) {
+          img.src = assetUrl(rel, tried);
         }
-        img.onerror = null;
-        img.src = siteBase() + encodeAssetPath(rel);
       };
 
       window.__rewriteDocsifyImage = function (img) {
         img.loading = "lazy";
         img.decoding = "async";
         if (!ON_PAGES) return;
-        var src = img.getAttribute("src") || img.src || "";
-        var rel = img.getAttribute("data-rel") || toRepoRel(src);
+        var rel = fullyDecode(img.getAttribute("data-rel") || toRepoRel(img.getAttribute("src") || img.src || ""));
         if (!rel || /^https?:/i.test(rel) || rel.indexOf("data:") === 0) return;
         img.setAttribute("data-rel", rel);
         img.onerror = function () { window.__onDocsifyImgError(img); };
-        if (src.indexOf(CDNS[0]) === 0) {
-          img.setAttribute("data-cdn-try", "0");
-          return;
-        }
-        if (img.getAttribute("data-cdn-try") != null) return;
+        var wanted = assetUrl(rel, 0);
         img.setAttribute("data-cdn-try", "0");
-        img.src = CDNS[0] + encodeAssetPath(rel);
+        if (fullyDecode(img.getAttribute("src") || "") !== fullyDecode(wanted) && fullyDecode(img.src || "") !== fullyDecode(wanted)) {
+          img.src = wanted;
+        }
       };
 
       window.$docsify = {
@@ -250,16 +259,13 @@
         basePath: ON_PAGES ? CDNS[0] : undefined,
         loadSidebar: true,
         loadNavbar: true,
+        alias: {
+          "/.*/_sidebar.md": "/_sidebar.md",
+          "/.*/_navbar.md": "/_navbar.md"
+        },
         subMaxLevel: 3,
         auto2top: true,
         notFoundPage: true,
-        search: {
-          maxAge: 86400000,
-          paths: "auto",
-          placeholder: "🔍 全局检索 246 道面试题...",
-          noData: "未找到匹配题目",
-          depth: 4
-        },
         copyCode: {
           buttonText: "复制",
           errorText: "错误",
@@ -280,9 +286,8 @@
       };
     })();
   </script>
-  <!-- Docsify v4 (jsDelivr China mirror first) -->
+  <!-- Docsify v4 (China mirror first). Search plugin omitted: auto-index of 246 files overflows localStorage and stalls first paint. -->
   <script src="https://cdn.jsdmirror.com/npm/docsify@4/lib/docsify.min.js"></script>
-  <script src="https://cdn.jsdmirror.com/npm/docsify@4/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdmirror.com/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
   <script src="https://cdn.jsdmirror.com/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   <!-- Prism Language Highlighting -->

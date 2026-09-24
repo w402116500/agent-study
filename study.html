@@ -2088,8 +2088,19 @@ strong {
     'https://cdn.jsdmirror.com/gh/' + ASSET_REPO + '@main/',
     'https://testingcf.jsdelivr.net/gh/' + ASSET_REPO + '@main/'
   ];
+  function fullyDecode(value) {
+    let prev = String(value || '');
+    for (let i = 0; i < 5; i++) {
+      try {
+        const next = decodeURIComponent(prev);
+        if (next === prev) break;
+        prev = next;
+      } catch (_) { break; }
+    }
+    return prev;
+  }
   function encodeAssetPath(path) {
-    return String(path || '').split('/').map(encodeURIComponent).join('/');
+    return fullyDecode(path).split('/').filter(Boolean).map(encodeURIComponent).join('/');
   }
   function currentQuestionModule() {
     const item = QUESTIONS.find(x => x.id === state.currentId) || QUESTIONS[0];
