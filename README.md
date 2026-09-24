@@ -65,4 +65,4 @@
 2. 在 **Build and deployment** 下的 **Branch** 选择 `main` 分支，路径选择 `/ (root)`，点击 **Save**。
 3. 稍等片刻，即可通过 `https://<用户名>.github.io/<仓库名>/` 在线研读与自测刷题。
 
-题解配图已压缩为 WebP（约 50MB，原先 PNG 超过 800MB）。GitHub Pages 上会优先走 jsDelivr 国内镜像加载图片，失败再回退到 Pages 源站。
+题解配图已压缩为 WebP（约 50MB，原先 PNG 超过 800MB）。GitHub Pages 上文档和图片会优先走 `cdn.jsdmirror.com`（国内节点），失败再回退 `testingcf.jsdelivr.net`，最后才回源 Pages。Markdown 在渲染前就会改写成 CDN 地址，避免浏览器先打 GitHub 再改写导致双请求。
