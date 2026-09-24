@@ -1,0 +1,87 @@
+# Python & envs
+__pycache__/
+*.py[cod]
+*$py.class
+*.venv/
+.venv/
+
+# External cloned repositories & skills
+modular-rag-mcp-server/
+ai-job-search/
+project-interview-prep/
+
+# Browser profiles and captures
+langsmith-capture/
+.playwright-mcp/
+
+# Tooling and caches
+.dsh/
+.tools/
+.trellis/
+.claude/
+.agents/
+.codex/
+
+# Scratch, build & temporary artifacts
+*.bak
+*.backup.html
+* copy.html
+*.pre-mobile-bak
+*.log
+*.tmp
+inspect_temp.txt
+extracted_sections.txt
+all_target_sections.txt
+detail_*.txt
+targets_sample.txt
+test_net.txt
+nav_structure.json
+patch_sections/
+build_data/
+extracted_styles.css
+interview_visuals/
+project_visualization.html
+project-interview-study.html
+scripts/check_*.py
+scripts/test_*.py
+scripts/inspect_*.py
+scripts/run_temp.py
+scripts/verify_*.py
+scripts/build_all.py
+scripts/build_study.py
+scripts/generate_study_html.py
+scripts/make_study.py
+scripts/parse_test.py
+scripts/prefix_js.js
+scripts/suffix_js.js
+scripts/full_style.css
+
+# Legacy monolothic markdown/html manuals & old materials
+AI_Agent_RAG_LLM_面试题库总手册.html
+AI_Agent_RAG_LLM_面试题库总手册.md
+AI_Agent_RAG_148题面试通关手册.md
+AI_Agent_RAG_面试通关总手册.md
+AI_Agent面试文档.md
+AGENTS.md
+八股题库_Agent应用开发.md
+八股题库_Python.md
+八股题库_技术栈深挖.md
+口播视频素材下载渠道-AI参考用.md
+模拟面试复习手册_企业级RAG项目.md
+模拟面试复习手册_受控数据分析Agent项目.md
+
+# Personal resumes and sensitive job applications
+陈永族_*
+投递稿_*
+奖学金综合排名.csv
+基础简历.md
+定制简历_*
+简历投递版.md
+简历版式档案.md
+经历库.md
+示例JD_*
+企业核查_*
+AI辅助编程案例_陈永族.md
+
+# Root temp scripts
+/*.py
