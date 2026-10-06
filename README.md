@@ -1,7 +1,7 @@
-# AI Agent & RAG & LLM 面试通关全景知识库 (246 题)
+# AI Agent & RAG & LLM 面试通关全景知识库 (310 题)
 
-> **SuperMew（企业级 RAG 检索增强） × DataPilot（受控数据分析 Agent） × 综合架构 × 98 道通用理论八股**  
-> 全量覆盖 246 道核心技术面试题，提供**知识库文档站**与**沉浸式刷题自测平台**双端系统。
+> **SuperMew（企业级 RAG 检索增强） × DataPilot（受控数据分析 Agent） × 综合架构 × 98 道通用理论八股 × 模拟面试实录 × 后端基础八股**  
+> 全量覆盖 310 道核心技术面试题，提供**知识库文档站**与**沉浸式刷题自测平台**双端系统。
 
 ---
 
@@ -12,14 +12,14 @@
 | 平台名称 | 核心文件 | 定位与核心功能 | 访问与使用方式 |
 | :--- | :--- | :--- | :--- |
 | **知识库文档站** | [`index.html`](index.html) | **全景研读**：Docsify 零编译原生驱动，树形侧边栏、全局全文检索、代码一键复制、架构高清图缩放 | 部署 GitHub Pages 在线访问，或本地启动轻量静态服务秒开 |
-| **专属全题库自测刷题平台** | [`study.html`](study.html) | **自测背诵**：246 题全景覆盖、**🎯 背诵遮罩自测模式**、掌握度实时打标追踪、快捷键顺滑切题、纯前端免 CORS 离线秒开 | **直接双击 `study.html` 本地即可直接使用** |
+| **专属全题库自测刷题平台** | [`study.html`](study.html) | **自测背诵**：310 题全景覆盖、**🎯 背诵遮罩自测模式**、掌握度实时打标追踪、快捷键顺滑切题、纯前端免 CORS 离线秒开 | **直接双击 `study.html` 本地即可直接使用** |
 
 ---
 
-## 📚 题库全景模块概览 (246 题)
+## 📚 题库全景模块概览 (310 题)
 
 ```text
-大模型面试题/ (共 246 题 + 导读与合集)
+大模型面试题/ (共 310 题 + 导读与合集)
 ├── 01_Agent面试题/            [24 题] Agent 核心概念、记忆体系、规划范式与 Multi-Agent 协作
 ├── 02_RAG面试题/              [21 题] 文档分块、向量数据库、Dense/BM25 混合检索、重排与评估
 ├── 03_LLM工具调用面试题/      [18 题] 原生 Function Calling、MCP (Model Context Protocol) 协议、A2A 架构
@@ -27,7 +27,9 @@
 ├── 05_LangChain框架面试题/    [12 题] LCEL 表达式语言、LangGraph 状态机、Memory 与 Checkpointer
 ├── 06_SuperMew项目深挖/       [40 题] 真实企业 RAG：MinerU 解析、父子块补回、Milvus+ES、Qwen Rerank、Ragas 评测
 ├── 07_DataPilot项目深挖/      [66 题] 受控 Agent：guard_sql AST 防护、SQLite 状态机、Docker 隔离沙箱、SSE 先落库再推
-└── 08_项目架构与综合追问/     [42 题] 全局架构权衡、大厂高频追问防御、Python 异步并发与 GC 底层原理
+├── 08_项目架构与综合追问/     [42 题] 全局架构权衡、大厂高频追问防御、Python 异步并发与 GC 底层原理
+├── 09_模拟面试实录_定稿版20261003/ [19 题] 定稿版简历模拟面试：原回答修正对照、口述答案、一句话记忆、口径对照
+└── 10_后端基础八股/           [45 题] BE 后端部署、DB 数据库、RED Redis、DOCK Docker、NET 网络、OS 操作系统
 ```
 
 ---
@@ -65,4 +67,4 @@
 2. 在 **Build and deployment** 下的 **Branch** 选择 `main` 分支，路径选择 `/ (root)`，点击 **Save**。
 3. 稍等片刻，即可通过 `https://<用户名>.github.io/<仓库名>/` 在线研读与自测刷题。
 
-题解配图已压缩为 WebP（约 50MB，原先 PNG 超过 800MB）。GitHub Pages 上文档和图片会优先走 `cdn.jsdmirror.com`（国内节点），失败再回退 `testingcf.jsdelivr.net`，最后才回源 Pages。文档站侧栏检索请用刷题平台自带搜索：Docsify 全量索引 246 篇会撑爆浏览器 localStorage，并在首次打开时额外请求上百个 markdown。
+题解配图已压缩为 WebP（约 50MB，原先 PNG 超过 800MB）。GitHub Pages 上文档和图片会优先走 `cdn.jsdmirror.com`（国内节点），失败再回退 `testingcf.jsdelivr.net`，最后才回源 Pages。文档站侧栏检索请用刷题平台自带搜索：Docsify 全量索引 310 篇会撑爆浏览器 localStorage，并在首次打开时额外请求上百个 markdown。
