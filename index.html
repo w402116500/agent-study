@@ -256,7 +256,8 @@
       window.$docsify = {
         name: "AI Agent & RAG 面试题库",
         homepage: "大模型面试题/README.md",
-        basePath: ON_PAGES ? CDNS[0] : undefined,
+        // 本地预览不传 basePath（显式 undefined 会被 docsify 拼成 "undefined/" 导致 404）
+        ...(ON_PAGES ? { basePath: CDNS[0] } : {}),
         loadSidebar: true,
         loadNavbar: true,
         alias: {
