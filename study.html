@@ -1831,6 +1831,28 @@ strong {
   }
 }
 
+/* ===== 题解配图自适应（移动端防溢出） ===== */
+.study-card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.diagram-img-box {
+  max-width: 100%;
+}
+.diagram-img-box > div {
+  max-width: 100%;
+}
+/* 表格与代码块在窄屏下横向滚动，不撑破卡片 */
+.study-card table,
+.study-card pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 </style>
 </head>
 <body>
